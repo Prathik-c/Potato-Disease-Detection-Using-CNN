@@ -1,4 +1,4 @@
-# 🌿 Potato Plant Disease Detection
+#  Potato Plant Disease Detection
 
 An AI-powered web application that detects potato leaf diseases using a Convolutional Neural Network (CNN). Upload a photo of a potato leaf and get an instant diagnosis — **Early Blight**, **Late Blight**, or **Healthy** — along with confidence scores and treatment recommendations.
 
@@ -15,7 +15,7 @@ An AI-powered web application that detects potato leaf diseases using a Convolut
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 ```
 plant-disease-detection-using-cnn/
@@ -63,7 +63,7 @@ plant-disease-detection-using-cnn/
 
 ---
 
-## ⚙️ Environment Setup
+##  Environment Setup
 
 > **Required**: Python 3.11 (TensorFlow is incompatible with Python 3.13 on Windows)
 > Node.js 18+
@@ -98,7 +98,7 @@ copy .env.example .env
 
 ---
 
-## 🚀 Running the Application
+##  Running the Application
 
 ### Start the Backend (FastAPI + Uvicorn)
 
@@ -122,7 +122,7 @@ The frontend will be available at: **http://localhost:5173**
 
 ---
 
-## 🔌 API Documentation
+##  API Documentation
 
 ### `GET /health`
 Returns the health status of the API and whether the model is loaded.
@@ -161,7 +161,7 @@ Accepts an image file and returns a disease prediction.
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests
 
 ```bash
 # From project root (with venv activated)
@@ -170,7 +170,7 @@ backend\venv\Scripts\python -m pytest backend/tests/ -v
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### `ImportError: DLL load failed while importing _pywrap_tensorflow_lite_metrics_wrapper`
 **Cause**: TensorFlow is not compatible with Python 3.13 on Windows.
@@ -187,7 +187,7 @@ backend\venv\Scripts\python -m pytest backend/tests/ -v
 
 ---
 
-## 📦 Dependencies
+##  Dependencies
 
 ### Backend (`requirements.txt`)
 | Package | Version | Purpose |
@@ -205,7 +205,7 @@ backend\venv\Scripts\python -m pytest backend/tests/ -v
 
 ---
 
-## 🚢 Deployment Notes
+##  Deployment Notes
 
 - Set `CORS_ORIGINS` in `.env` to your production frontend URL.
 - Set `reload=False` in `run.py` for production.
@@ -214,7 +214,7 @@ backend\venv\Scripts\python -m pytest backend/tests/ -v
 
 ---
 
-## 🏷️ Recommended Python Version
+## Recommended Python Version
 
 **Python 3.11.x** — officially supported by TensorFlow 2.16+ on Windows.
 
