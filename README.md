@@ -4,7 +4,7 @@ An AI-powered web application that detects potato leaf diseases using a Convolut
 
 ---
 
-## 📸 Features
+##  Features
 
 - **Real-time CNN inference** via a FastAPI backend
 - **EfficientNet-based model** trained on potato leaf images
