@@ -4,11 +4,12 @@ import { DiagnosisResult } from "@/components/DiagnosisResult";
 import { Button } from "@/components/ui/button";
 import { Leaf, Loader2, Sparkles, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { predictDisease, PredictionResult } from "@/services/api";
 
 const Index = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [result, setResult] = useState<{ label: string; confidence: number } | null>(null);
+  const [result, setResult] = useState<PredictionResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { toast } = useToast();
 
@@ -32,23 +33,9 @@ const Index = () => {
     if (!selectedFile) return;
 
     setIsAnalyzing(true);
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
     try {
-      // Replace with your FastAPI backend URL
-      const response = await fetch("http://127.0.0.1:5000/predict", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to analyze image");
-      }
-
-      const data = await response.json();
+      const data = await predictDisease(selectedFile);
       setResult(data);
-      
       toast({
         title: "✨ Analysis Complete",
         description: "Disease detection completed successfully",
@@ -57,7 +44,10 @@ const Index = () => {
       console.error("Error analyzing image:", error);
       toast({
         title: "Analysis Failed",
-        description: "Unable to connect to the backend. Make sure your FastAPI server is running on localhost:8000",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Unable to connect to the backend. Make sure the server is running on port 8000.",
         variant: "destructive",
       });
     } finally {
@@ -69,7 +59,7 @@ const Index = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Animated background mesh */}
       <div className="fixed inset-0 bg-[image:var(--gradient-mesh)] opacity-60 pointer-events-none" />
-      
+
       {/* Header */}
       <header className="border-b border-border/50 glass-card sticky top-0 z-20 shadow-sm">
         <div className="container mx-auto px-4 py-5">
@@ -107,11 +97,12 @@ const Index = () => {
               <div className="flex-1 space-y-3">
                 <h2 className="text-2xl font-bold">Advanced CNN Detection System</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Upload a clear image of a potato leaf and our state-of-the-art Convolutional Neural Network 
-                  will analyze it to detect <span className="font-semibold text-foreground">Early Blight</span>, 
-                  <span className="font-semibold text-foreground"> Late Blight</span>, or confirm if the plant is 
-                  <span className="font-semibold text-foreground"> healthy</span>. Get instant confidence scores 
-                  and actionable treatment recommendations.
+                  Upload a clear image of a potato leaf and our state-of-the-art Convolutional Neural
+                  Network will analyze it to detect{" "}
+                  <span className="font-semibold text-foreground">Early Blight</span>,{" "}
+                  <span className="font-semibold text-foreground">Late Blight</span>, or confirm if
+                  the plant is <span className="font-semibold text-foreground">healthy</span>. Get
+                  instant confidence scores and actionable treatment recommendations.
                 </p>
                 <div className="flex flex-wrap gap-2 pt-2">
                   <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
@@ -163,7 +154,7 @@ const Index = () => {
           {result && (
             <div className="space-y-6">
               <DiagnosisResult label={result.label} confidence={result.confidence} />
-              
+
               {/* New Analysis Button */}
               <Button
                 onClick={handleClearImage}
